@@ -11,7 +11,8 @@ func Provider() terraform.ResourceProvider {
 		Schema: map[string]*schema.Schema{},
 
 		ResourcesMap: map[string]*schema.Resource{
-			"wireguard_peer": resourcePeer(),
+			"wireguard_peer":   resourcePeer(),
+			"wireguard_config": resourceConfig(),
 		},
 	}
 }

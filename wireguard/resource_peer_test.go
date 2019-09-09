@@ -27,11 +27,6 @@ func TestAccResourcePeer(t *testing.T) {
 					}),
 				),
 			},
-			{
-				ResourceName:      "wireguard_peer.foo",
-				ImportState:       true,
-				ImportStateVerify: true,
-			},
 		},
 	})
 }
