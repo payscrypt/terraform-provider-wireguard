@@ -24,6 +24,9 @@ func resourcePeer() *schema.Resource {
 		Read:   ReadPeer,
 		Update: UpdatePeer,
 		Delete: schema.RemoveFromState,
+		Importer: &schema.ResourceImporter{
+			State: ImportPeer,
+		},
 		CustomizeDiff: customdiff.All(
 			customdiff.ComputedIf("interface_rendered", func(d *schema.ResourceDiff, meta interface{}) bool {
 				return d.HasChange("interface_template") || d.HasChange("vars")
@@ -130,6 +133,14 @@ func ReadPeer(d *schema.ResourceData, _ interface{}) error {
 
 func UpdatePeer(d *schema.ResourceData, meta interface{}) error {
 	return ReadPeer(d, meta)
+}
+
+func ImportPeer(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
+	err := ReadPeer(d, meta)
+	if err != nil {
+		return nil, err
+	}
+	return []*schema.ResourceData{d}, nil
 }
 
 type templateRenderError error
